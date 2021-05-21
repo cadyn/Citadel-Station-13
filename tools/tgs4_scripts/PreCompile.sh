@@ -65,6 +65,24 @@ env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --release --target=i686-un
 mv target/i686-unknown-linux-gnu/release/librust_g.so "$1/librust_g.so"
 cd ..
 
+if [ ! -d "auxmos" ]; then
+	echo "Cloning auxmos..."
+	git clone https://github.com/Putnam3145/auxmos
+	cd auxmos
+	~/.cargo/bin/rustup target add i686-unknown-linux-gnu
+else
+	echo "Fetching auxmos..."
+	cd auxmos
+	git fetch
+	~/.cargo/bin/rustup target add i686-unknown-linux-gnu
+fi
+
+echo "Deploying auxmos..."
+git pull origin master #To-do: Replace with version control from dependencies.sh
+env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --release --target=i686-unknown-linux-gnu
+mv target/i686-unknown-linux-gnu/release/libauxmos.so "$1/libauxmos.so"
+cd ..
+
 # compile tgui
 echo "Compiling tgui..."
 cd "$1"
