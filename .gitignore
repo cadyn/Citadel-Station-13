@@ -9,6 +9,7 @@
 
 #Ignore rust-g and auxmos libraries which are compiled with scripts
 *.so
+/tools/build/binaries/*
 
 #Ignore compiled files and other files generated during compilation.
 *.mdme
